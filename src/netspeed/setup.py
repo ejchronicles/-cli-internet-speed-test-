@@ -10,7 +10,7 @@ setup(
     name="netspeed-cli",
     version="0.1.0",
     author="Elton John Kellum",
-    author_email="eltonjohnkellum@gmail.com",
+    author_email="elton.kellum@riarauniversity.ac.ke",
     description="Cross-platform CLI Internet Speed Test Tool",
     long_description=long_description,
     long_description_content_type="text/markdown",
