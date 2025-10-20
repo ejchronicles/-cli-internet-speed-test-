@@ -1,22 +1,21 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
   release:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.10'
     
     - name: Install dependencies
       run: |
@@ -27,18 +26,9 @@ jobs:
       run: |
         python -m build
     
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          dist/*
-        generate_release_notes: true
-    
-    - name: Publish to PyPI (Optional)
+    - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
-        pip install twine
         twine upload dist/*
-      # Note: This step requires setting PYPI_API_TOKEN in repository secrets
